@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	assetsPrefix = []byte("/assets")
-	staticFilesHandler = fasthttp.FSHandler("./assets/", 2)
+	assetsPrefix = []byte("/web")
+	staticFilesHandler = fasthttp.FSHandler("./web/", 2)
 )
 
 // Define the router function to handle request paths and match
