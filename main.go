@@ -7,8 +7,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	// package for handling routing via mutliplexer
-	"github.com/gorilla/mux"
 )
 
 func main() {
@@ -28,17 +26,6 @@ func main() {
 	// The handler is usually nil, which means to use DefaultServeMux.
 	// but in our case we are using the gorille mux
 	log.Fatal(http.ListenAndServe(":8080", router))
-}
-
-// Lets create a router constructor that creates the router and
-// returns it to us. We can now use this function
-// to instantiate and test the router outside of the main function
-func newPostitRouter() *mux.Router {
-	// The mux routher is useful because it allows us to declare
-	// paths that handler methods will be valid for
-	r := mux.NewRouter()
-	r.HandleFunc("/", apiHandler).Methods("GET")
-	return r
 }
 
 // Define the apiHandler function to handle (req, res) objects
