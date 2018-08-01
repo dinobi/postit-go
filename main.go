@@ -4,9 +4,8 @@
 package main
 
 import (
-	"fmt"
 	"log"
-	"net/http"
+	"github.com/valyala/fasthttp"
 )
 
 func main() {
@@ -18,19 +17,9 @@ func main() {
 	// for application we will be using an external package that helps treat different paths
 	// in different ways
 
-	// Create a postit router instance for handling routes
-	router := newPostitRouter()
-
 	// When an error occurs, we print the error and exit the app (os.Exit(1))
 	// ListenAndServe starts an HTTP server with a given address and handler.
 	// The handler is usually nil, which means to use DefaultServeMux.
 	// but in our case we are using the gorille mux
-	log.Fatal(http.ListenAndServe(":8080", router))
-}
-
-// Define the apiHandler function to handle (req, res) objects
-// It has to follow the function signature of a ResponseWriter
-// and Request type as the arguments.
-func apiHandler(res http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(res, "Welcome to Postit") // write to res object instead of command line
+	log.Fatal(fasthttp.ListenAndServe(":8080", router))
 }
