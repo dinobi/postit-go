@@ -3,8 +3,9 @@ package main
 // User represents Postit's User object.
 // This account object has support for Social Auth
 type User struct{
+	Id float64
 	Provider string `json:"provider"`
-	UID int `json:"uid"`
+	UID interface{} `json:"uid"`
 	Username string `json:"username"`
 	Bio string `json:"bio"`
 	Password interface{} `json:"password"`

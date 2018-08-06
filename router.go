@@ -34,7 +34,9 @@ func router(ctx *fasthttp.RequestCtx) {
 		case "/":
 			fmt.Fprintf(ctx, "Welcome to Postit")
 		case "/users":
-			userHandler(ctx)
+			getUsers(ctx)
+		case "/new-user":
+			createUser(ctx)
 		default:
 			ctx.Error("Unsupported path", fasthttp.StatusNotFound)
 		}

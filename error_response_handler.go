@@ -11,7 +11,7 @@ type ErrorResponse struct {
 	Status int `json:"status"`
 }
 
-func errorResponseHandler (status int, ctx *fasthttp.RequestCtx) {
+func errorResponseHandler (ctx *fasthttp.RequestCtx, status int) {
 	errorResponse := &ErrorResponse{}
 	// Use a switch statement to match based on error code
 	switch status {
