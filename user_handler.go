@@ -2,11 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/valyala/fasthttp"
 )
 
-func createUser(ctx *fasthttp.RequestCtx) {
+func signup(ctx *fasthttp.RequestCtx) {
 	// create an instance of the user struct
 	user := &User{}
 
@@ -15,11 +14,16 @@ func createUser(ctx *fasthttp.RequestCtx) {
 
 	// convert from bytes into a struct as specified by user struct object
 	if err := json.Unmarshal(formData, &user); err != nil {
-		errorResponseHandler(ctx, 500)
+		message := ""
+		errorResponseHandler(ctx, message, 500)
 	}
 
-	// Append our existing list of birds with a new entry
+	if (invalidCredentials(ctx, *user)) {
+		return;
+	}
+	// Append our existing list of users with a new entry
 	users = append(users, *user)
+	// successResponseHandler(ctx, *user)
 }
 
 func getUsers(ctx *fasthttp.RequestCtx) {
@@ -32,7 +36,8 @@ func getUsers(ctx *fasthttp.RequestCtx) {
 	// If there is an error, print it to the console, and return a server
 	// error response to the user
 	if err != nil {
-		errorResponseHandler(ctx, 500)
+		message := ""
+		errorResponseHandler(ctx, message, 500)
 		return
 	}
 	// If all goes well, write the JSON list of birds to the response

@@ -8,6 +8,10 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
+const (
+	port string = ":8080"
+)
+
 func main() {
 	// The "HandleFunc" method accepts a path and a function as arguments
 	// (Yes, we can pass functions as arguments, and even treat them like variables in Go)
@@ -21,5 +25,5 @@ func main() {
 	// ListenAndServe starts an HTTP server with a given address and handler.
 	// The handler is usually nil, which means to use DefaultServeMux.
 	// but in our case we are using the gorille mux
-	log.Fatal(fasthttp.ListenAndServe(":8080", router))
+	log.Fatal(fasthttp.ListenAndServe(port, router))
 }
