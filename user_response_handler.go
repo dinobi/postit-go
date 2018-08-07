@@ -28,7 +28,9 @@ func userResponseHandler (ctx *fasthttp.RequestCtx, data *User, message string, 
 	// Use a switch statement to match based on error code
 	switch status {
 	case 200:
-	
+		// TODO: add object to return to use on successful events
+		userResponse.Message = fasthttp.StatusMessage(200)
+		sendData(ctx, userResponse)
 	case 201:
 		userResponse.Data["username"] = data.Username
 		userResponse.Data["email"] = data.Email

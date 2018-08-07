@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"github.com/valyala/fasthttp"
+	"fmt"
 )
 
 func signup(ctx *fasthttp.RequestCtx) {
@@ -12,7 +13,7 @@ func signup(ctx *fasthttp.RequestCtx) {
 
 	// get the post request body
 	formData := ctx.PostBody()
-
+	fmt.Println(string(formData))
 	// convert from bytes into a struct as specified by user struct object
 	if err := json.Unmarshal(formData, &user); err != nil {
 		errorResponseHandler(ctx, message, 500)
