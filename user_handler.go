@@ -3,18 +3,19 @@ package main
 import (
 	"encoding/json"
 	"github.com/valyala/fasthttp"
+	"fmt"
 )
 
 func signup(ctx *fasthttp.RequestCtx) {
 	// create an instance of the user struct
 	user := &User{}
+	message := ""
 
 	// get the post request body
 	formData := ctx.PostBody()
-
+	fmt.Println(string(formData))
 	// convert from bytes into a struct as specified by user struct object
 	if err := json.Unmarshal(formData, &user); err != nil {
-		message := ""
 		errorResponseHandler(ctx, message, 500)
 	}
 
@@ -23,7 +24,8 @@ func signup(ctx *fasthttp.RequestCtx) {
 	}
 	// Append our existing list of users with a new entry
 	users = append(users, *user)
-	// successResponseHandler(ctx, *user)
+	message = "User account created successfully" 
+	userResponseHandler(ctx, user, message, 201)
 }
 
 func getUsers(ctx *fasthttp.RequestCtx) {

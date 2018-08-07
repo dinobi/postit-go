@@ -6,51 +6,27 @@ import (
 	"log"
 )
 
+type ResponseType string
+
 // ErrorResponse represents an error object sent back to the client.
 // when an error occurs
 type ErrorResponse struct {
 	Message string `json:"message"`
-	Status int `json:"status"`
+	Type ResponseType `json:"type"`
 }
 
+// errorResponseHandler acts like constructor for an error response object
+// to be sent to the client when an error occurs in the request
 func errorResponseHandler (ctx *fasthttp.RequestCtx, message string, status int) {
 	errorResponse := &ErrorResponse{}
 	ctx.SetStatusCode(status)
-	// Use a switch statement to match based on error code
-	switch status {
-	case 400:
-		errorResponse.Message = message
-		errorResponse.Status = 400
-		sendError(ctx, errorResponse)
-	
-	case 401:
-		errorResponse.Message = message
-		errorResponse.Status = 401
-		sendError(ctx, errorResponse)
+	errorResponse.Type = "error"
 
-	case 403:
+	if status < 500 {
 		errorResponse.Message = message
-		errorResponse.Status = 403
 		sendError(ctx, errorResponse)
-
-	case 404:
-		errorResponse.Message = message
-		errorResponse.Status = 404
-		sendError(ctx, errorResponse)
-
-	case 409:
-		errorResponse.Message = message
-		errorResponse.Status = 409
-		sendError(ctx, errorResponse)
-
-	case 422:
-		errorResponse.Message = message
-		errorResponse.Status = 422
-		sendError(ctx, errorResponse)
-
-	default:
+	} else {
 		errorResponse.Message = fasthttp.StatusMessage(status)
-		errorResponse.Status = status
 		sendError(ctx, errorResponse)
 	}
 }
