@@ -1,4 +1,4 @@
-module postit-go
+module github.com/dinobi/postit-go
 
 go 1.17
 
